@@ -5,6 +5,9 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 import Assignment1 from "./components/Assignment1";
 import Assignment2 from "./components/Assignment2";
 import Assignment3 from "./components/Assignment3";
+import Assignment4 from "./components/Assignment4";
+import Assignment5 from "./components/Assignment5";
+import Assignment6 from "./components/Assignment6";
 
 const NAV = ["Giới thiệu", "Dự án", "Tổng kết"];
 
@@ -16,7 +19,7 @@ const PROJECTS = [
     goal: "Nắm vững thao tác quản lý tệp tin, thư mục và tổ chức dữ liệu học tập hiệu quả.",
     process: [
       "Xây dựng cấu trúc thư mục theo học kỳ: K67D_HK1 → Luật-Dan-Su → Tai-lieu / Bai-tap / De-cuong",
-      "Áp dụng quy tắc đặt tên: ngày_tháng_nội-dung (vd: 2024-03-01_Hop-dong-dan-su.pdf)",
+      "Áp dụng quy tắc đặt tên: ngày_tháng_nội-dung (vd: 2026-03-01_Hop-dong-dan-su.pdf)",
       "Phân loại tài liệu pháp luật theo từng chương của BLDS 2015",
     ],
     outcome: "Cấu trúc thư mục hoàn chỉnh, ảnh màn hình minh họa, file PDF mô tả quy tắc đặt tên.",
@@ -67,7 +70,7 @@ const PROJECTS = [
     outcome: "Ảnh chụp màn hình buổi họp, biên bản cuộc họp, link Google Docs tài liệu nhóm.",
     tags: ["Collaboration", "Google Meet", "Teamwork"],
     imgHint: "💻 CHÈN ẢNH: Chụp màn hình buổi họp nhóm trên Google Meet / Zoom với các thành viên",
-    hasComponent: false,
+    hasComponent: true,
   },
   {
     id: "05",
@@ -82,7 +85,7 @@ const PROJECTS = [
     outcome: "Infographic BLDS 2015, sơ đồ phân loại hợp đồng, video giải thích quy trình hòa giải.",
     tags: ["Generative AI", "Canva", "Legal Content"],
     imgHint: "🎨 CHÈN ẢNH/VIDEO: Đính kèm infographic hoặc sơ đồ bạn đã tạo bằng Canva / AI",
-    hasComponent: false,
+    hasComponent: true,
   },
   {
     id: "06",
@@ -97,7 +100,7 @@ const PROJECTS = [
     outcome: "Bài phân tích về đạo đức AI trong hành nghề Luật; checklist kiểm tra đầu ra AI cho sinh viên Luật.",
     tags: ["AI Ethics", "Responsible AI", "Legal Ethics"],
     imgHint: "📊 CHÈN ẢNH: Infographic hoặc bảng tổng hợp các nguyên tắc sử dụng AI có trách nhiệm",
-    hasComponent: false,
+    hasComponent: true,
   },
 ];
 
@@ -118,6 +121,9 @@ function AssignmentContent({ id }: { id: string }) {
     case "01": return <Assignment1 />;
     case "02": return <Assignment2 />;
     case "03": return <Assignment3 />;
+    case "04": return <Assignment4 />;
+    case "05": return <Assignment5 />;
+    case "06": return <Assignment6 />;
     default: return null;
   }
 }
@@ -499,9 +505,9 @@ export default function Home() {
             <em style={{ color: "var(--accent)", fontStyle: "italic" }}>Sinh viên Luật</em>
           </h1>
 
-          <p style={{ fontFamily: "var(--sans)", fontSize: "0.95rem", color: "var(--muted)", maxWidth: "500px", lineHeight: 1.85, marginBottom: "2rem" }}>
+          <p style={{ fontFamily: "var(--sans)", fontSize: "0.95rem", color: "var(--muted)", maxWidth: "550px", lineHeight: 1.85, marginBottom: "2rem" }}>
             Sinh viên năm 4 ngành <strong style={{ color: "var(--text)" }}>Luật học</strong> — Trường Đại học Luật, ĐHQGHN · Lớp K67D · MSSV 22061380.<br />
-            Quan tâm đến <strong style={{ color: "var(--text)" }}>Luật Dân sự</strong>, quyền con người và ứng dụng công nghệ trong hành nghề pháp lý (LegalTech).
+            Là một người đam mê khám phá và không ngừng tìm tòi học hỏi, tôi luôn tò mò về cách công nghệ định hình thế giới. Tôi đặc biệt quan tâm đến <strong style={{ color: "var(--text)" }}>Luật Dân sự</strong> và việc ứng dụng trí tuệ nhân tạo (AI) để tối ưu hóa quy trình hành nghề pháp lý (LegalTech).
           </p>
           <p style={{ fontFamily: "var(--sans)", fontSize: "0.85rem", color: "var(--muted)", maxWidth: "500px", lineHeight: 1.8, marginBottom: "2.5rem", fontStyle: "italic" }}>
             &ldquo;Portfolio này tổng hợp các kỹ năng số tôi đã học trong học phần Nhập môn Công nghệ số & AI, đồng thời là nơi lưu trữ và chia sẻ hành trình học tập của bản thân.&rdquo;
@@ -626,41 +632,87 @@ export default function Home() {
         </div>
       </section>
 
-      {/* BLDS CALLOUT */}
-      <section style={{ borderTop: "1px solid var(--border)", background: "var(--bg2)", padding: "4rem 2rem" }}>
-        <div style={{ maxWidth: "960px", margin: "0 auto" }}>
+      {/* KIẾN THỨC NỀN TẢNG - BLDS 2015 */}
+      <section style={{ borderTop: "1px solid var(--border)", background: "var(--bg2)", padding: "5rem 2rem" }}>
+        <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
           <FadeIn>
-            <p style={{ fontSize: "0.65rem", letterSpacing: "0em", textTransform: "uppercase", color: "var(--accent)", marginBottom: "0.75rem" }}>Kiến thức nền tảng</p>
-            <h2 style={{ fontFamily: "var(--serif)", fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 300, color: "var(--text)", marginBottom: "2.5rem" }}>
-              Bộ Luật Dân Sự Việt Nam 2015 <em style={{ color: "var(--muted)", fontStyle: "italic" }}>— Nền tảng học tập</em>
+            <p style={{ fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--accent)", marginBottom: "0.75rem" }}>Kiến thức chuyên ngành</p>
+            <h2 style={{ fontFamily: "var(--serif)", fontSize: "clamp(2rem, 4vw, 2.8rem)", fontWeight: 300, color: "var(--text)", marginBottom: "1.5rem" }}>
+              Bộ Luật Dân Sự 2015 <br/>
+              <em style={{ color: "var(--muted)", fontStyle: "italic", fontSize: "0.8em" }}>Đạo luật gốc của Hệ thống pháp luật tư</em>
             </h2>
+            <p style={{ fontSize: "0.95rem", color: "var(--muted)", lineHeight: 1.8, maxWidth: "700px", marginBottom: "3rem" }}>
+              Bộ luật Dân sự 2015 không chỉ là một văn bản quy phạm pháp luật, mà còn là nền tảng cốt lõi điều chỉnh mọi quan hệ xã hội phát sinh trên cơ sở bình đẳng, tự do ý chí và tự chịu trách nhiệm. Trong bối cảnh số hóa, việc nắm vững BLDS 2015 là chìa khóa để xây dựng các giải pháp LegalTech và tư vấn pháp lý AI chính xác.
+            </p>
           </FadeIn>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "1px", background: "var(--border)" }}>
+
+          {/* Cấu trúc 6 phần */}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.5rem", marginBottom: "4rem" }}>
             {[
-              { no: "689 điều", label: "Bố cục", desc: "6 phần, 27 chương, có hiệu lực từ 01/01/2017" },
-              { no: "5 nguyên tắc", label: "Điều 3 BLDS", desc: "Bình đẳng, tự do ý chí, thiện chí, tự chịu trách nhiệm, tôn trọng lợi ích Nhà nước" },
-              { no: "Hợp đồng", label: "Phần thứ ba", desc: "Điều 385–429 quy định giao kết, hiệu lực, thực hiện và chấm dứt hợp đồng" },
-              { no: "Bồi thường", label: "Điều 584–608", desc: "Trách nhiệm bồi thường thiệt hại ngoài hợp đồng — căn cứ phát sinh và nguyên tắc bồi thường" },
+              { part: "Phần 1", title: "Quy định chung", details: "Điều 1 - 150: Nguyên tắc cơ bản, Năng lực hành vi, Giao dịch dân sự, Đại diện, Thời hiệu." },
+              { part: "Phần 2", title: "Quyền sở hữu và Quyền khác", details: "Điều 151 - 273: Chiếm hữu, Quyền sở hữu, Quyền đối với tài sản của người khác." },
+              { part: "Phần 3", title: "Nghĩa vụ và Hợp đồng", details: "Điều 274 - 608: Thực hiện nghĩa vụ, Bảo đảm nghĩa vụ, Hợp đồng thông dụng, Bồi thường ngoài hợp đồng." },
+              { part: "Phần 4", title: "Thừa kế", details: "Điều 609 - 662: Thừa kế theo di chúc, Thừa kế theo pháp luật, Thanh toán và Phân chia di sản." },
+              { part: "Phần 5", title: "Pháp luật áp dụng", details: "Điều 663 - 687: Quan hệ dân sự có yếu tố nước ngoài, Áp dụng pháp luật nước ngoài, Xung đột pháp luật." },
+              { part: "Phần 6", title: "Điều khoản thi hành", details: "Điều 688 - 689: Hiệu lực thi hành và Quy định chuyển tiếp." },
             ].map((item, i) => (
-              <FadeIn key={item.no} delay={i * 0.07}>
-                <div style={{ background: "var(--bg2)", padding: "1.5rem", transition: "background 0.2s" }}
-                  onMouseEnter={e => (e.currentTarget.style.background = "var(--surface)")}
-                  onMouseLeave={e => (e.currentTarget.style.background = "var(--bg2)")}>
-                  <p style={{ fontFamily: "var(--serif)", fontSize: "1.4rem", color: "var(--accent)", marginBottom: "0.3rem", fontWeight: 400 }}>{item.no}</p>
-                  <p style={{ fontSize: "0.65rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--muted)", marginBottom: "0.5rem" }}>{item.label}</p>
-                  <p style={{ fontSize: "0.82rem", color: "var(--muted)", lineHeight: 1.7 }}>{item.desc}</p>
+              <FadeIn key={item.part} delay={i * 0.1}>
+                <div style={{ 
+                  background: "var(--surface)", 
+                  padding: "1.5rem", 
+                  borderRadius: "8px", 
+                  border: "1px solid var(--border)",
+                  height: "100%",
+                  transition: "transform 0.2s, background 0.2s"
+                }}
+                onMouseEnter={e => {
+                  (e.currentTarget as HTMLDivElement).style.background = "var(--bg3)";
+                  (e.currentTarget as HTMLDivElement).style.transform = "translateY(-2px)";
+                }}
+                onMouseLeave={e => {
+                  (e.currentTarget as HTMLDivElement).style.background = "var(--surface)";
+                  (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
+                }}>
+                  <div style={{ display: "flex", alignItems: "baseline", gap: "0.5rem", marginBottom: "1rem" }}>
+                    <span style={{ fontSize: "0.7rem", color: "var(--accent)", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 500 }}>{item.part}</span>
+                    <h4 style={{ fontFamily: "var(--serif)", fontSize: "1.2rem", color: "var(--text)", fontWeight: 400 }}>{item.title}</h4>
+                  </div>
+                  <p style={{ fontSize: "0.85rem", color: "var(--muted)", lineHeight: 1.6 }}>{item.details}</p>
                 </div>
               </FadeIn>
             ))}
           </div>
 
-          {/* 📸 GỢI Ý CHÈN ẢNH BLDS */}
+          {/* Thay thế Placeholder bằng nội dung thực tế */}
           <FadeIn delay={0.3}>
-            <div style={{ marginTop: "2rem", background: "rgba(201,169,110,0.07)", border: "1px dashed rgba(201,169,110,0.35)", borderRadius: "4px", padding: "1.25rem 1.5rem" }}>
-              <p style={{ fontSize: "0.75rem", color: "var(--accent)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.4rem" }}>📸 GỢI Ý HÌNH ẢNH CHO PHẦN NÀY</p>
-              <p style={{ fontSize: "0.82rem", color: "var(--muted)", lineHeight: 1.7 }}>
-                Có thể chèn: (1) Ảnh bìa Bộ Luật Dân sự 2015 (tải từ vbpl.vn) · (2) Sơ đồ cấu trúc 6 phần của BLDS bạn tự vẽ bằng Canva · (3) Ảnh chụp buổi học môn Luật Dân sự trên lớp
-              </p>
+            <div style={{ 
+              background: "linear-gradient(145deg, var(--surface), var(--bg))", 
+              border: "1px solid rgba(201,169,110,0.15)", 
+              borderRadius: "12px", 
+              overflow: "hidden",
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+            }}>
+              {/* Nội dung diễn giải */}
+              <div style={{ padding: "3rem 2.5rem", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                <h3 style={{ fontFamily: "var(--serif)", fontSize: "1.6rem", color: "var(--accent)", marginBottom: "1rem" }}>
+                  Hệ thống hóa Tư duy Pháp lý
+                </h3>
+                <p style={{ fontSize: "0.95rem", color: "var(--muted)", lineHeight: 1.8, marginBottom: "2rem" }}>
+                  Việc hệ thống hóa 689 điều luật thành sơ đồ trực quan không chỉ giúp ghi nhớ nhanh cấu trúc mà còn hỗ trợ quá trình đối chiếu, so sánh và suy luận pháp lý một cách logic. Dưới đây là sơ đồ Mind Map tổng hợp khối lượng kiến thức đồ sộ của môn học, được thực hiện với sự hỗ trợ của các công cụ số chuyên dụng.
+                </p>
+                <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+                  <span style={{ fontSize: "0.75rem", padding: "6px 14px", background: "rgba(201,169,110,0.08)", color: "var(--accent)", borderRadius: "20px", border: "1px solid rgba(201,169,110,0.2)", letterSpacing: "0.05em" }}>✓ Tư duy hệ thống</span>
+                  <span style={{ fontSize: "0.75rem", padding: "6px 14px", background: "rgba(201,169,110,0.08)", color: "var(--accent)", borderRadius: "20px", border: "1px solid rgba(201,169,110,0.2)", letterSpacing: "0.05em" }}>✓ Trực quan hóa dữ liệu</span>
+                </div>
+              </div>
+              
+              {/* Hình ảnh sơ đồ */}
+              <div style={{ background: "rgba(0,0,0,0.2)", borderLeft: "1px solid rgba(255,255,255,0.03)", display: "flex", alignItems: "center", justifyContent: "center", padding: "2rem" }}>
+                <div style={{ width: "100%", borderRadius: "8px", overflow: "hidden", border: "1px solid rgba(255,255,255,0.08)", boxShadow: "0 10px 30px rgba(0,0,0,0.5)" }}>
+                  <img src="/mindmap-blds.png" alt="Sơ đồ tư duy BLDS" style={{ width: "100%", height: "auto", display: "block", filter: "brightness(0.95)" }} />
+                </div>
+              </div>
             </div>
           </FadeIn>
         </div>
@@ -701,13 +753,78 @@ export default function Home() {
             </FadeIn>
           ))}
 
-          {/* 📸 GỢI Ý ẢNH TỔNG KẾT */}
+          {/* Hình ảnh tổng kết (Thay thế Placeholder) */}
           <FadeIn delay={0.5}>
-            <div style={{ marginTop: "1.5rem", background: "rgba(201,169,110,0.07)", border: "1px dashed rgba(201,169,110,0.35)", borderRadius: "4px", padding: "1.25rem 1.5rem" }}>
-              <p style={{ fontSize: "0.75rem", color: "var(--accent)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.4rem" }}>📸 GỢI Ý ẢNH CHO TRANG TỔNG KẾT</p>
-              <p style={{ fontSize: "0.82rem", color: "var(--muted)", lineHeight: 1.7 }}>
-                Chèn ảnh chụp tại trường ĐH Luật ĐHQGHN, ảnh với nhóm học tập K67D, hoặc ảnh chụp màn hình kết quả môn học để minh chứng quá trình học.
-              </p>
+            <div style={{ 
+              marginTop: "4rem",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "1.5rem"
+            }}>
+              <div style={{
+                position: "relative",
+                padding: "1rem",
+                background: "#fdfcf8",
+                borderRadius: "2px",
+                boxShadow: "0 20px 50px rgba(0,0,0,0.5)",
+                transform: "rotate(-2deg)",
+                transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                cursor: "pointer",
+                maxWidth: "600px",
+                width: "100%"
+              }}
+              onMouseEnter={e => {
+                (e.currentTarget as HTMLDivElement).style.transform = "rotate(0deg) scale(1.02)";
+                (e.currentTarget as HTMLDivElement).style.boxShadow = "0 30px 60px rgba(0,0,0,0.6)";
+              }}
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLDivElement).style.transform = "rotate(-2deg) scale(1)";
+                (e.currentTarget as HTMLDivElement).style.boxShadow = "0 20px 50px rgba(0,0,0,0.5)";
+              }}
+              >
+                {/* Băng dính trang trí */}
+                <div style={{
+                  position: "absolute",
+                  top: "-15px",
+                  left: "50%",
+                  transform: "translateX(-50%) rotate(2deg)",
+                  width: "120px",
+                  height: "35px",
+                  background: "rgba(255,255,255,0.4)",
+                  boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
+                  zIndex: 10,
+                  backdropFilter: "blur(2px)",
+                  border: "1px solid rgba(255,255,255,0.5)"
+                }} />
+
+                <div style={{ width: "100%", height: "auto", overflow: "hidden", border: "1px solid #e0e0e0" }}>
+                  <img src="/image-tongket.jpg" alt="Quá trình thực hành môn học" style={{ width: "100%", display: "block" }} />
+                </div>
+                
+                <p style={{ 
+                  fontFamily: "var(--serif)", 
+                  color: "#2a2a32", 
+                  textAlign: "center", 
+                  marginTop: "1.5rem",
+                  fontSize: "1.2rem",
+                  fontStyle: "italic",
+                  letterSpacing: "0.02em"
+                }}>
+                  "Hành trình công nghệ bắt đầu từ những bước nhỏ nhất."
+                </p>
+                <p style={{ 
+                  textAlign: "center", 
+                  fontSize: "0.7rem", 
+                  color: "#8a8690", 
+                  marginTop: "0.4rem", 
+                  fontFamily: "var(--sans)", 
+                  textTransform: "uppercase", 
+                  letterSpacing: "0.15em" 
+                }}>
+                  Kỷ niệm môn học · K67D ĐH Luật ĐHQGHN
+                </p>
+              </div>
             </div>
           </FadeIn>
         </div>
@@ -717,7 +834,7 @@ export default function Home() {
       <footer style={{ borderTop: "1px solid var(--border)", padding: "2rem", textAlign: "center", background: "var(--bg2)" }}>
         <p style={{ fontFamily: "var(--serif)", fontSize: "1rem", color: "var(--accent)", marginBottom: "0.4rem" }}>Lò Văn Tiến · 22061380</p>
         <p style={{ fontSize: "0.72rem", color: "var(--muted)", letterSpacing: "0.08em" }}>
-          K67D · Luật học · Trường Đại học Luật, ĐHQGHN · 2024
+          K67D · Luật học · Trường Đại học Luật, ĐHQGHN · 2026
         </p>
       </footer>
 
