@@ -205,7 +205,7 @@ export default function Assignment6() {
                 { id: "c2", label: "Tôi đã tự suy nghĩ và có dàn ý cho vấn đề này trước chưa?" },
                 { id: "c3", label: "Câu hỏi (Prompt) của tôi đã cung cấp đủ ngữ cảnh pháp lý chưa?" }
               ].map(item => (
-                <label key={item.id} style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", cursor: "pointer", group: "true" }}>
+                <label key={item.id} style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", cursor: "pointer" }}>
                   <input type="checkbox" checked={!!checkedItems[item.id]} onChange={() => toggleCheck(item.id)}
                     style={{ marginTop: "4px", accentColor: "var(--accent)", width: "16px", height: "16px", cursor: "pointer" }} />
                   <span style={{ fontSize: "0.85rem", color: checkedItems[item.id] ? "var(--text)" : "var(--muted)", lineHeight: 1.5, transition: "color 0.2s" }}>
