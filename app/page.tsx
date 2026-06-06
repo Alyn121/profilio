@@ -489,27 +489,15 @@ export default function Home() {
       </nav>
 
       {/* HERO */}
-      <section id="hero" style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 2rem", maxWidth: "960px", margin: "0 auto", position: "relative" }}>
+      <section id="hero" style={{ minHeight: "100vh", display: "grid", gridTemplateColumns: "1fr 1fr", alignItems: "center", gap: "3rem", padding: "0 2rem", maxWidth: "1200px", margin: "0 auto", position: "relative" }}>
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
-          <p style={{ fontFamily: "var(--sans)", fontSize: "0.75rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--accent)", marginBottom: "1.5rem" }}>
+          <p style={{ fontFamily: "var(--sans)", fontSize: "0.75rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--accent)", marginBottom: "1.5rem" }}>
             Digital Portfolio · Nhập môn Công nghệ số & AI
           </p>
           <h1 style={{ fontFamily: "var(--serif)", fontSize: "clamp(2.8rem, 7vw, 5.5rem)", fontWeight: 300, lineHeight: 1.05, color: "var(--text)", marginBottom: "1.5rem" }}>
             Lò Văn Tiến<br />
             <em style={{ color: "var(--accent)", fontStyle: "italic" }}>Sinh viên Luật</em>
           </h1>
-
-          {/* 📸 PROFILE IMAGE */}
-          <div style={{ marginBottom: "1.5rem", maxWidth: "420px", overflow: "hidden", borderRadius: "8px", border: "1px solid var(--border)" }}>
-            <Image 
-              src="/profile-avatar.jpg" 
-              alt="Lò Văn Tiến - Sinh viên Luật K67D"
-              width={400}
-              height={400}
-              priority
-              style={{ width: "100%", height: "auto", display: "block" }}
-            />
-          </div>
 
           <p style={{ fontFamily: "var(--sans)", fontSize: "0.95rem", color: "var(--muted)", maxWidth: "500px", lineHeight: 1.85, marginBottom: "2rem" }}>
             Sinh viên năm nhất ngành <strong style={{ color: "var(--text)" }}>Luật học</strong> — Trường Đại học Luật, ĐHQGHN · Lớp K67D · MSSV 22061380.<br />
@@ -519,14 +507,29 @@ export default function Home() {
             &ldquo;Portfolio này tổng hợp các kỹ năng số tôi đã học trong học phần Nhập môn Công nghệ số & AI, đồng thời là nơi lưu trữ và chia sẻ hành trình học tập của bản thân.&rdquo;
           </p>
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-            <button onClick={() => scrollTo("projects")} style={{ fontFamily: "var(--sans)", fontSize: "0.8rem", letterSpacing: "0.1em", textTransform: "uppercase", padding: "0.75rem 2rem", background: "var(--accent)", color: "#000", border: "none", cursor: "pointer", fontWeight: 500 }}>
+            <button onClick={() => scrollTo("projects")} style={{ fontFamily: "var(--sans)", fontSize: "0.8rem", letterSpacing: "0.08em", textTransform: "uppercase", padding: "0.75rem 2rem", background: "var(--accent)", color: "#000", border: "none", cursor: "pointer", fontWeight: 500 }}>
               Xem 6 bài tập →
             </button>
-            <button onClick={() => scrollTo("summary")} style={{ fontFamily: "var(--sans)", fontSize: "0.8rem", letterSpacing: "0.1em", textTransform: "uppercase", padding: "0.75rem 2rem", background: "none", color: "var(--muted)", border: "1px solid var(--border)", cursor: "pointer" }}>
+            <button onClick={() => scrollTo("summary")} style={{ fontFamily: "var(--sans)", fontSize: "0.8rem", letterSpacing: "0.08em", textTransform: "uppercase", padding: "0.75rem 2rem", background: "none", color: "var(--muted)", border: "1px solid var(--border)", cursor: "pointer" }}>
               Tổng kết
             </button>
           </div>
         </motion.div>
+
+        {/* 📸 PROFILE IMAGE - SIDE */}
+        <motion.div initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, delay: 0.2 }} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <div style={{ width: "100%", maxWidth: "400px", overflow: "hidden", borderRadius: "12px", border: "1px solid var(--border)", boxShadow: "0 20px 60px rgba(0,0,0,0.3)" }}>
+            <Image 
+              src="/profile-avatar.jpg" 
+              alt="Lò Văn Tiến - Sinh viên Luật K67D"
+              width={400}
+              height={400}
+              priority
+              style={{ width: "100%", height: "auto", display: "block" }}
+            />
+          </div>
+        </motion.div>
+
         <div style={{ position: "absolute", right: "4vw", top: "15vh", width: "1px", height: "45vh", background: "linear-gradient(to bottom, transparent, var(--border), transparent)" }} />
       </section>
 
@@ -540,7 +543,7 @@ export default function Home() {
             { label: "Trường", value: "ĐH Luật, ĐHQGHN" },
           ].map((item) => (
             <FadeIn key={item.label}>
-              <p style={{ fontSize: "0.65rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--accent)", marginBottom: "0.35rem" }}>{item.label}</p>
+              <p style={{ fontSize: "0.65rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--accent)", marginBottom: "0.35rem" }}>{item.label}</p>
               <p style={{ fontFamily: "var(--serif)", fontSize: "1.05rem", color: "var(--text)", fontWeight: 400 }}>{item.value}</p>
             </FadeIn>
           ))}
