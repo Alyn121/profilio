@@ -491,7 +491,7 @@ export default function Home() {
       {/* HERO */}
       <section id="hero" style={{ minHeight: "100vh", display: "grid", gridTemplateColumns: "1fr 1fr", alignItems: "center", gap: "3rem", padding: "0 2rem", maxWidth: "1200px", margin: "0 auto", position: "relative" }}>
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
-          <p style={{ fontFamily: "var(--sans)", fontSize: "0.75rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--accent)", marginBottom: "1.5rem" }}>
+          <p style={{ fontFamily: "var(--sans)", fontSize: "0.75rem", letterSpacing: "0em", textTransform: "uppercase", color: "var(--accent)", marginBottom: "1.5rem" }}>
             Digital Portfolio · Nhập môn Công nghệ số & AI
           </p>
           <h1 style={{ fontFamily: "var(--serif)", fontSize: "clamp(2.8rem, 7vw, 5.5rem)", fontWeight: 300, lineHeight: 1.05, color: "var(--text)", marginBottom: "1.5rem" }}>
@@ -500,7 +500,7 @@ export default function Home() {
           </h1>
 
           <p style={{ fontFamily: "var(--sans)", fontSize: "0.95rem", color: "var(--muted)", maxWidth: "500px", lineHeight: 1.85, marginBottom: "2rem" }}>
-            Sinh viên năm nhất ngành <strong style={{ color: "var(--text)" }}>Luật học</strong> — Trường Đại học Luật, ĐHQGHN · Lớp K67D · MSSV 22061380.<br />
+            Sinh viên năm 4 ngành <strong style={{ color: "var(--text)" }}>Luật học</strong> — Trường Đại học Luật, ĐHQGHN · Lớp K67D · MSSV 22061380.<br />
             Quan tâm đến <strong style={{ color: "var(--text)" }}>Luật Dân sự</strong>, quyền con người và ứng dụng công nghệ trong hành nghề pháp lý (LegalTech).
           </p>
           <p style={{ fontFamily: "var(--sans)", fontSize: "0.85rem", color: "var(--muted)", maxWidth: "500px", lineHeight: 1.8, marginBottom: "2.5rem", fontStyle: "italic" }}>
@@ -543,7 +543,7 @@ export default function Home() {
             { label: "Trường", value: "ĐH Luật, ĐHQGHN" },
           ].map((item) => (
             <FadeIn key={item.label}>
-              <p style={{ fontSize: "0.65rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--accent)", marginBottom: "0.35rem" }}>{item.label}</p>
+              <p style={{ fontSize: "0.65rem", letterSpacing: "0em", textTransform: "uppercase", color: "var(--accent)", marginBottom: "0.35rem" }}>{item.label}</p>
               <p style={{ fontFamily: "var(--serif)", fontSize: "1.05rem", color: "var(--text)", fontWeight: 400 }}>{item.value}</p>
             </FadeIn>
           ))}
@@ -553,7 +553,7 @@ export default function Home() {
       {/* PROJECTS */}
       <section id="projects" style={{ padding: "5rem 2rem", maxWidth: "960px", margin: "0 auto" }}>
         <FadeIn>
-          <p style={{ fontSize: "0.7rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--accent)", marginBottom: "0.75rem" }}>Kết quả học tập</p>
+          <p style={{ fontSize: "0.7rem", letterSpacing: "0em", textTransform: "uppercase", color: "var(--accent)", marginBottom: "0.75rem" }}>Kết quả học tập</p>
           <h2 style={{ fontFamily: "var(--serif)", fontSize: "clamp(2rem, 5vw, 3.2rem)", fontWeight: 300, color: "var(--text)", marginBottom: "0.75rem" }}>
             6 Bài tập <em style={{ fontStyle: "italic", color: "var(--muted)" }}>đã hoàn thành</em>
           </h2>
@@ -630,7 +630,7 @@ export default function Home() {
       <section style={{ borderTop: "1px solid var(--border)", background: "var(--bg2)", padding: "4rem 2rem" }}>
         <div style={{ maxWidth: "960px", margin: "0 auto" }}>
           <FadeIn>
-            <p style={{ fontSize: "0.65rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--accent)", marginBottom: "0.75rem" }}>Kiến thức nền tảng</p>
+            <p style={{ fontSize: "0.65rem", letterSpacing: "0em", textTransform: "uppercase", color: "var(--accent)", marginBottom: "0.75rem" }}>Kiến thức nền tảng</p>
             <h2 style={{ fontFamily: "var(--serif)", fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 300, color: "var(--text)", marginBottom: "2.5rem" }}>
               Bộ Luật Dân Sự Việt Nam 2015 <em style={{ color: "var(--muted)", fontStyle: "italic" }}>— Nền tảng học tập</em>
             </h2>
