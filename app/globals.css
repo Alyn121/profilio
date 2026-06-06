@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap');
 @import "tailwindcss";
 
 :root {
@@ -11,7 +11,7 @@
   --accent2: #e8d5b0;
   --text: #f0ece4;
   --muted: #8a8690;
-  --serif: 'Cormorant Garamond', Georgia, serif;
+  --serif: 'Playfair Display', Georgia, serif;
   --sans: 'DM Sans', sans-serif;
 }
 

@@ -1,7 +1,10 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { useState, useEffect, useRef, useCallback } from "react";
+import Image from "next/image";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import Assignment1 from "./components/Assignment1";
+import Assignment2 from "./components/Assignment2";
+import Assignment3 from "./components/Assignment3";
 
 const NAV = ["Giới thiệu", "Dự án", "Tổng kết"];
 
@@ -19,6 +22,7 @@ const PROJECTS = [
     outcome: "Cấu trúc thư mục hoàn chỉnh, ảnh màn hình minh họa, file PDF mô tả quy tắc đặt tên.",
     tags: ["File System", "Quản lý dữ liệu"],
     imgHint: "📁 CHÈN ẢNH: Chụp màn hình cấu trúc thư mục thực tế trên máy tính của bạn",
+    hasComponent: true,
   },
   {
     id: "02",
@@ -33,6 +37,7 @@ const PROJECTS = [
     outcome: "Bảng so sánh nguồn thông tin pháp lý, quy trình tra cứu văn bản quy phạm pháp luật.",
     tags: ["Research", "Legal Research", "BLDS 2015"],
     imgHint: "🔍 CHÈN ẢNH: Chụp màn hình kết quả tìm kiếm pháp lý trên thuvienphapluat.vn hoặc vbpl.vn",
+    hasComponent: true,
   },
   {
     id: "03",
@@ -47,6 +52,7 @@ const PROJECTS = [
     outcome: "Bảng so sánh 5 cặp Prompt trước/sau; hướng dẫn viết Prompt cho sinh viên Luật.",
     tags: ["Prompt Engineering", "AI", "LegalTech"],
     imgHint: "🤖 CHÈN ẢNH: Chụp màn hình 2 câu trả lời của AI – một với prompt cũ, một với prompt mới để so sánh",
+    hasComponent: true,
   },
   {
     id: "04",
@@ -61,6 +67,7 @@ const PROJECTS = [
     outcome: "Ảnh chụp màn hình buổi họp, biên bản cuộc họp, link Google Docs tài liệu nhóm.",
     tags: ["Collaboration", "Google Meet", "Teamwork"],
     imgHint: "💻 CHÈN ẢNH: Chụp màn hình buổi họp nhóm trên Google Meet / Zoom với các thành viên",
+    hasComponent: false,
   },
   {
     id: "05",
@@ -75,6 +82,7 @@ const PROJECTS = [
     outcome: "Infographic BLDS 2015, sơ đồ phân loại hợp đồng, video giải thích quy trình hòa giải.",
     tags: ["Generative AI", "Canva", "Legal Content"],
     imgHint: "🎨 CHÈN ẢNH/VIDEO: Đính kèm infographic hoặc sơ đồ bạn đã tạo bằng Canva / AI",
+    hasComponent: false,
   },
   {
     id: "06",
@@ -89,6 +97,7 @@ const PROJECTS = [
     outcome: "Bài phân tích về đạo đức AI trong hành nghề Luật; checklist kiểm tra đầu ra AI cho sinh viên Luật.",
     tags: ["AI Ethics", "Responsible AI", "Legal Ethics"],
     imgHint: "📊 CHÈN ẢNH: Infographic hoặc bảng tổng hợp các nguyên tắc sử dụng AI có trách nhiệm",
+    hasComponent: false,
   },
 ];
 
@@ -103,10 +112,345 @@ function FadeIn({ children, delay = 0, className = "" }: { children: React.React
   );
 }
 
+/* ──────────────────── ASSIGNMENT COMPONENT MAP ──────────────────── */
+function AssignmentContent({ id }: { id: string }) {
+  switch (id) {
+    case "01": return <Assignment1 />;
+    case "02": return <Assignment2 />;
+    case "03": return <Assignment3 />;
+    default: return null;
+  }
+}
+
+/* ──────────────────── DRAWER PANEL ──────────────────── */
+function ProjectDrawer({
+  project,
+  onClose,
+}: {
+  project: typeof PROJECTS[number] | null;
+  onClose: () => void;
+}) {
+  const drawerRef = useRef<HTMLDivElement>(null);
+
+  // Close on Escape
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [onClose]);
+
+  // Lock body scroll when open
+  useEffect(() => {
+    if (project) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [project]);
+
+  // Scroll to top when project changes
+  useEffect(() => {
+    if (project && drawerRef.current) {
+      drawerRef.current.scrollTop = 0;
+    }
+  }, [project]);
+
+  return (
+    <AnimatePresence>
+      {project && (
+        <>
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            onClick={onClose}
+            style={{
+              position: "fixed",
+              inset: 0,
+              zIndex: 90,
+              background: "rgba(0,0,0,0.6)",
+              backdropFilter: "blur(4px)",
+              cursor: "pointer",
+            }}
+          />
+
+          {/* Drawer */}
+          <motion.div
+            ref={drawerRef}
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", damping: 30, stiffness: 300 }}
+            style={{
+              position: "fixed",
+              top: 0,
+              right: 0,
+              bottom: 0,
+              width: "min(680px, 90vw)",
+              zIndex: 100,
+              background: "var(--bg)",
+              borderLeft: "1px solid var(--border)",
+              overflowY: "auto",
+              overflowX: "hidden",
+              boxShadow: "-20px 0 60px rgba(0,0,0,0.4)",
+            }}
+          >
+            {/* Drawer Header */}
+            <div style={{
+              position: "sticky",
+              top: 0,
+              zIndex: 10,
+              background: "rgba(12,12,14,0.95)",
+              backdropFilter: "blur(12px)",
+              borderBottom: "1px solid var(--border)",
+              padding: "1rem 1.75rem",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+                <span style={{
+                  fontFamily: "var(--serif)",
+                  fontSize: "1.5rem",
+                  color: "var(--accent)",
+                  fontWeight: 300,
+                  opacity: 0.6,
+                }}>
+                  {project.id}
+                </span>
+                <div>
+                  <p style={{
+                    fontSize: "0.6rem",
+                    letterSpacing: "0.15em",
+                    textTransform: "uppercase",
+                    color: "var(--muted)",
+                    marginBottom: "2px",
+                  }}>
+                    {project.topic}
+                  </p>
+                  <h3 style={{
+                    fontFamily: "var(--serif)",
+                    fontSize: "1.05rem",
+                    color: "var(--text)",
+                    fontWeight: 400,
+                    lineHeight: 1.3,
+                  }}>
+                    {project.title}
+                  </h3>
+                </div>
+              </div>
+              <button
+                onClick={onClose}
+                style={{
+                  background: "var(--surface)",
+                  border: "1px solid var(--border)",
+                  borderRadius: "8px",
+                  width: "36px",
+                  height: "36px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  color: "var(--muted)",
+                  fontSize: "1.1rem",
+                  transition: "all 0.2s",
+                  flexShrink: 0,
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.background = "var(--bg3)";
+                  e.currentTarget.style.color = "var(--text)";
+                  e.currentTarget.style.borderColor = "var(--accent)";
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.background = "var(--surface)";
+                  e.currentTarget.style.color = "var(--muted)";
+                  e.currentTarget.style.borderColor = "var(--border)";
+                }}
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Drawer Body */}
+            <div style={{ padding: "2rem 1.75rem 3rem" }}>
+              {/* Tags */}
+              <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "2rem" }}>
+                {project.tags.map(t => (
+                  <span key={t} style={{
+                    fontSize: "0.62rem",
+                    letterSpacing: "0.08em",
+                    padding: "4px 10px",
+                    border: "1px solid var(--border)",
+                    color: "var(--muted)",
+                    borderRadius: "4px",
+                  }}>
+                    {t}
+                  </span>
+                ))}
+              </div>
+
+              {/* Goal */}
+              <div style={{ marginBottom: "2rem" }}>
+                <p style={{
+                  fontSize: "0.65rem",
+                  letterSpacing: "0.15em",
+                  textTransform: "uppercase",
+                  color: "var(--accent)",
+                  marginBottom: "0.6rem",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                }}>
+                  <span style={{ fontSize: "0.85rem" }}>🎯</span> Mục tiêu
+                </p>
+                <p style={{
+                  fontSize: "0.9rem",
+                  color: "var(--muted)",
+                  lineHeight: 1.85,
+                  paddingLeft: "0.5rem",
+                  borderLeft: "2px solid rgba(201,169,110,0.3)",
+                }}>
+                  {project.goal}
+                </p>
+              </div>
+
+              {/* Process */}
+              <div style={{ marginBottom: "2rem" }}>
+                <p style={{
+                  fontSize: "0.65rem",
+                  letterSpacing: "0.15em",
+                  textTransform: "uppercase",
+                  color: "var(--accent)",
+                  marginBottom: "0.8rem",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                }}>
+                  <span style={{ fontSize: "0.85rem" }}>⚙️</span> Quá trình thực hiện
+                </p>
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+                  {project.process.map((step, si) => (
+                    <div key={si} style={{
+                      display: "flex",
+                      gap: "0.75rem",
+                      alignItems: "flex-start",
+                      padding: "0.75rem 1rem",
+                      background: "var(--surface)",
+                      borderRadius: "6px",
+                      border: "1px solid var(--border)",
+                    }}>
+                      <span style={{
+                        width: "22px",
+                        height: "22px",
+                        borderRadius: "50%",
+                        background: "rgba(201,169,110,0.12)",
+                        color: "var(--accent)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: "0.7rem",
+                        fontWeight: 600,
+                        flexShrink: 0,
+                        marginTop: "1px",
+                      }}>
+                        {si + 1}
+                      </span>
+                      <p style={{ fontSize: "0.83rem", color: "var(--muted)", lineHeight: 1.7 }}>{step}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Outcome */}
+              <div style={{ marginBottom: "2rem" }}>
+                <p style={{
+                  fontSize: "0.65rem",
+                  letterSpacing: "0.15em",
+                  textTransform: "uppercase",
+                  color: "var(--accent)",
+                  marginBottom: "0.6rem",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                }}>
+                  <span style={{ fontSize: "0.85rem" }}>📦</span> Sản phẩm cuối cùng
+                </p>
+                <p style={{
+                  fontSize: "0.85rem",
+                  color: "var(--muted)",
+                  lineHeight: 1.85,
+                  paddingLeft: "0.5rem",
+                  borderLeft: "2px solid rgba(201,169,110,0.3)",
+                }}>
+                  {project.outcome}
+                </p>
+              </div>
+
+              {/* Divider */}
+              <div style={{
+                height: "1px",
+                background: "linear-gradient(to right, var(--accent), transparent)",
+                margin: "2rem 0",
+                opacity: 0.3,
+              }} />
+
+              {/* Assignment Component */}
+              {project.hasComponent ? (
+                <div>
+                  <p style={{
+                    fontSize: "0.65rem",
+                    letterSpacing: "0.15em",
+                    textTransform: "uppercase",
+                    color: "var(--accent)",
+                    marginBottom: "1.25rem",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.4rem",
+                  }}>
+                    <span style={{ fontSize: "0.85rem" }}>📝</span> Nội dung bài tập chi tiết
+                  </p>
+                  <AssignmentContent id={project.id} />
+                </div>
+              ) : (
+                /* Image Hint for assignments without component */
+                <div style={{
+                  background: "rgba(201,169,110,0.06)",
+                  border: "1px dashed rgba(201,169,110,0.35)",
+                  borderRadius: "8px",
+                  padding: "1.25rem 1.5rem",
+                }}>
+                  <p style={{
+                    fontSize: "0.65rem",
+                    letterSpacing: "0.12em",
+                    textTransform: "uppercase",
+                    color: "var(--accent)",
+                    marginBottom: "0.5rem",
+                  }}>
+                    📝 Nội dung bài tập
+                  </p>
+                  <p style={{ fontSize: "0.8rem", color: "var(--accent2)", lineHeight: 1.7 }}>
+                    {project.imgHint}
+                  </p>
+                </div>
+              )}
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  );
+}
+
+/* ──────────────────── MAIN PAGE ──────────────────── */
 export default function Home() {
   const [active, setActive] = useState("Giới thiệu");
   const [scrolled, setScrolled] = useState(false);
-  const [expanded, setExpanded] = useState<string | null>(null);
+  const [selectedProject, setSelectedProject] = useState<string | null>(null);
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 40);
@@ -115,6 +459,10 @@ export default function Home() {
   }, []);
 
   const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+
+  const handleClose = useCallback(() => setSelectedProject(null), []);
+
+  const activeProject = PROJECTS.find(p => p.id === selectedProject) || null;
 
   return (
     <div style={{ minHeight: "100vh", background: "var(--bg)" }}>
@@ -151,10 +499,16 @@ export default function Home() {
             <em style={{ color: "var(--accent)", fontStyle: "italic" }}>Sinh viên Luật</em>
           </h1>
 
-          {/* 📸 GỢI Ý CHÈN ẢNH ĐẠI DIỆN */}
-          <div style={{ background: "var(--surface)", border: "1px dashed var(--accent)", borderRadius: "4px", padding: "1rem 1.5rem", marginBottom: "1.5rem", maxWidth: "420px" }}>
-            <p style={{ fontSize: "0.75rem", color: "var(--accent)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.4rem" }}>📸 CHÈN ẢNH ĐẠI DIỆN TẠI ĐÂY</p>
-            <p style={{ fontSize: "0.8rem", color: "var(--muted)" }}>Thay thẻ này bằng thẻ &lt;Image&gt; của Next.js. Ảnh thẻ sinh viên hoặc ảnh chân dung chuyên nghiệp, tỷ lệ 1:1, kích thước 400×400px.</p>
+          {/* 📸 PROFILE IMAGE */}
+          <div style={{ marginBottom: "1.5rem", maxWidth: "420px", overflow: "hidden", borderRadius: "8px", border: "1px solid var(--border)" }}>
+            <Image 
+              src="/profile-avatar.jpg" 
+              alt="Lò Văn Tiến - Sinh viên Luật K67D"
+              width={400}
+              height={400}
+              priority
+              style={{ width: "100%", height: "auto", display: "block" }}
+            />
           </div>
 
           <p style={{ fontFamily: "var(--sans)", fontSize: "0.95rem", color: "var(--muted)", maxWidth: "500px", lineHeight: 1.85, marginBottom: "2rem" }}>
@@ -209,15 +563,51 @@ export default function Home() {
           {PROJECTS.map((p, i) => (
             <FadeIn key={p.id} delay={i * 0.06}>
               <div
-                onClick={() => setExpanded(expanded === p.id ? null : p.id)}
-                style={{ background: expanded === p.id ? "var(--surface)" : "var(--bg2)", padding: "1.75rem", transition: "background 0.2s", cursor: "pointer" }}
-                onMouseEnter={e => { if (expanded !== p.id) (e.currentTarget as HTMLDivElement).style.background = "var(--bg3)"; }}
-                onMouseLeave={e => { if (expanded !== p.id) (e.currentTarget as HTMLDivElement).style.background = "var(--bg2)"; }}
+                onClick={() => setSelectedProject(p.id)}
+                style={{
+                  background: selectedProject === p.id ? "var(--surface)" : "var(--bg2)",
+                  padding: "1.75rem",
+                  transition: "all 0.25s ease",
+                  cursor: "pointer",
+                  position: "relative",
+                  overflow: "hidden",
+                }}
+                onMouseEnter={e => {
+                  (e.currentTarget as HTMLDivElement).style.background = "var(--bg3)";
+                  (e.currentTarget as HTMLDivElement).style.transform = "translateY(-1px)";
+                }}
+                onMouseLeave={e => {
+                  (e.currentTarget as HTMLDivElement).style.background = selectedProject === p.id ? "var(--surface)" : "var(--bg2)";
+                  (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
+                }}
               >
+                {/* Active indicator */}
+                {selectedProject === p.id && (
+                  <div style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: "2px",
+                    background: "var(--accent)",
+                  }} />
+                )}
+
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1rem" }}>
                   <span style={{ fontFamily: "var(--serif)", fontSize: "2rem", color: "var(--border)", fontWeight: 300 }}>{p.id}</span>
-                  <span style={{ fontSize: "0.65rem", letterSpacing: "0.1em", textTransform: "uppercase", padding: "3px 10px", background: "rgba(201,169,110,0.12)", color: "var(--accent)", borderRadius: "2px" }}>
-                    {expanded === p.id ? "Thu gọn ↑" : "Chi tiết ↓"}
+                  <span style={{
+                    fontSize: "0.65rem",
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    padding: "3px 10px",
+                    background: "rgba(201,169,110,0.12)",
+                    color: "var(--accent)",
+                    borderRadius: "2px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "4px",
+                  }}>
+                    Xem chi tiết →
                   </span>
                 </div>
                 <p style={{ fontSize: "0.65rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--muted)", marginBottom: "0.4rem" }}>{p.topic}</p>
@@ -227,44 +617,6 @@ export default function Home() {
                     <span key={t} style={{ fontSize: "0.62rem", letterSpacing: "0.08em", padding: "3px 8px", border: "1px solid var(--border)", color: "var(--muted)", borderRadius: "2px" }}>{t}</span>
                   ))}
                 </div>
-
-                {/* EXPANDED DETAIL */}
-                {expanded === p.id && (
-                  <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}
-                    style={{ marginTop: "1.5rem", borderTop: "1px solid var(--border)", paddingTop: "1.5rem" }}>
-                    <div style={{ marginBottom: "1.25rem" }}>
-                      <p style={{ fontSize: "0.65rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--accent)", marginBottom: "0.5rem" }}>🎯 Mục tiêu</p>
-                      <p style={{ fontSize: "0.85rem", color: "var(--muted)", lineHeight: 1.75 }}>{p.goal}</p>
-                    </div>
-                    <div style={{ marginBottom: "1.25rem" }}>
-                      <p style={{ fontSize: "0.65rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--accent)", marginBottom: "0.6rem" }}>⚙️ Quá trình thực hiện</p>
-                      {p.process.map((step, si) => (
-                        <div key={si} style={{ display: "flex", gap: "0.75rem", marginBottom: "0.5rem", alignItems: "flex-start" }}>
-                          <span style={{ color: "var(--accent)", fontSize: "0.8rem", marginTop: "2px", flexShrink: 0 }}>{si + 1}.</span>
-                          <p style={{ fontSize: "0.83rem", color: "var(--muted)", lineHeight: 1.7 }}>{step}</p>
-                        </div>
-                      ))}
-                    </div>
-                    <div style={{ marginBottom: "1.25rem" }}>
-                      <p style={{ fontSize: "0.65rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--accent)", marginBottom: "0.5rem" }}>📦 Sản phẩm cuối cùng</p>
-                      <p style={{ fontSize: "0.83rem", color: "var(--muted)", lineHeight: 1.75 }}>{p.outcome}</p>
-                    </div>
-                    
-                    {/* ASSIGNMENT 1 COMPONENT */}
-                    {p.id === "01" && (
-                      <div style={{ marginTop: "2rem", paddingTop: "1.5rem", borderTop: "1px solid var(--border)" }}>
-                        <Assignment1 />
-                      </div>
-                    )}
-                    
-                    {/* IMAGE HINT BOX */}
-                    {p.id !== "01" && (
-                      <div style={{ background: "rgba(201,169,110,0.07)", border: "1px dashed rgba(201,169,110,0.4)", borderRadius: "3px", padding: "0.85rem 1rem" }}>
-                        <p style={{ fontSize: "0.75rem", color: "var(--accent2)", lineHeight: 1.65 }}>{p.imgHint}</p>
-                      </div>
-                    )}
-                  </motion.div>
-                )}
               </div>
             </FadeIn>
           ))}
@@ -365,6 +717,9 @@ export default function Home() {
           K67D · Luật học · Trường Đại học Luật, ĐHQGHN · 2024
         </p>
       </footer>
+
+      {/* ═══════ PROJECT DETAIL DRAWER ═══════ */}
+      <ProjectDrawer project={activeProject} onClose={handleClose} />
     </div>
   );
 }
